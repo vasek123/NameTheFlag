@@ -6,6 +6,7 @@ let flags = [];
 for (let key in Object.keys(flagsJSON)) {
   flags.push(flagsJSON[key]);
 }
+flags.splice(flags.length - 1, 1);
 
 //Views
 import Menu from './views/Menu.js';
@@ -26,57 +27,27 @@ export default class App extends Component {
     }
 
     this.state = {
-      view: this.views.quiz,
-      availableFlags: flags,
-      currentFlag: flags[Math.floor(Math.random() * flags.length)],
-      correctAnswers: 0
+      view: this.views.menu,
+      score: 0,
+      currentFlag: {}
     }
 
     this.changeView = this.changeView.bind(this);
-    this.changeCurrentFlag = this.changeCurrentFlag.bind(this);
-    this.checkAnswer = this.checkAnswer.bind(this);
+    this.clearAll = this.clearAll.bind(this);
+    this.updateScore = this.updateScore.bind(this);
+    this.updateScoreAndFlag = this.updateScoreAndFlag.bind(this);
   }
 
-  componentWillMount() {
-    this.changeCurrentFlag();
+  clearAll() {
+    this.setState(Object.assign({}, this.state, { score: 0, currentFlag: {} }));
   }
 
-  changeCurrentFlag() {
-    let availableFlags = [...this.state.availableFlags];
-    availableFlags.splice(availableFlags.indexOf(this.state.currentFlag, 1));
-
-    let index = Math.floor(Math.random() * availableFlags.length);
-    let currentFlag = availableFlags[index];
-
-    this.setState(Object.assign({}, this.state, { currentFlag: currentFlag }));
+  updateScoreAndFlag(score, currentFlag) {
+    this.setState(Object.assign({}, this.state, { score: score, currentFlag: currentFlag }));
   }
 
-  checkAnswer(input) {
-    if (this.state.currentFlag.name != input.trim().toLowerCase()) {
-      console.log('wrong name');
-      return false;
-    }
-
-    //If the input si correct then continue
-
-    //Generate new available flags
-    let availableFlags = this.state.availableFlags.slice();
-    availableFlags.splice(availableFlags.indexOf(this.state.currentFlag), 1);
-
-    //Randomly pick one
-    let currentFlag = availableFlags[Math.floor(Math.random() * availableFlags.length)];
-
-    this.setState(Object.assign({}, this.state, {
-      availableFlags: availableFlags,
-      currentFlag: currentFlag,
-      correctAnswers: this.state.correctAnswers + 1
-    }));
-
-    console.log(this.state);
-
-    console.log('correct!');
-
-    return true;
+  updateScore(score) {
+    this.setState(Object.assign({}, this.state, { score: score }));
   }
 
   changeView(view) {
@@ -85,9 +56,9 @@ export default class App extends Component {
 
   renderView() {
     if (this.state.view === this.views.quiz) {
-      return <Quiz flag={this.state.currentFlag} changeCurrentFlag={this.changeCurrentFlag} checkAnswer={this.checkAnswer}/>
+      return <Quiz flags={this.flags} score={this.state.score} updateScoreAndFlag={this.updateScoreAndFlag} clearAll={this.clearAll} changeView={this.changeView} views={this.views} />
     } else if (this.state.view === this.views.result) {
-      return <Result />
+      return <Result score={this.state.score} flag={this.state.currentFlag} clearAll={this.clearAll} changeView={this.changeView} views={this.views} />
     } else {
       return <Menu changeView={this.changeView} views={this.views} />
     }
