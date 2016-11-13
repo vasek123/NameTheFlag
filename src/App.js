@@ -26,7 +26,7 @@ export default class App extends Component {
     }
 
     this.state = {
-      view: this.views.menu,
+      view: this.views.quiz,
       availableFlags: flags,
       currentFlag: flags[Math.floor(Math.random() * flags.length)],
       correctAnswers: 0
@@ -52,22 +52,29 @@ export default class App extends Component {
   }
 
   checkAnswer(input) {
-    if (this.state.currentFlag.name != input.toLowerCase()) {
+    if (this.state.currentFlag.name != input.trim().toLowerCase()) {
       console.log('wrong name');
       return false;
     }
 
-    let availableFlags = [...this.state.availableFlags];
-    availableFlags.splice(availableFlags.indexOf(this.state.currentFlag), 1);
-    console.log(availableFlags);
-    this.setState(Object.assign({}, this.state,
-      {
-        availableFlags: availableFlags,
-        correctAnswers: this.state.correctAnswers + 1
-      }
-    ));
+    //If the input si correct then continue
 
-    this.changeCurrentFlag();
+    //Generate new available flags
+    let availableFlags = this.state.availableFlags.slice();
+    availableFlags.splice(availableFlags.indexOf(this.state.currentFlag), 1);
+
+    //Randomly pick one
+    let currentFlag = availableFlags[Math.floor(Math.random() * availableFlags.length)];
+
+    this.setState(Object.assign({}, this.state, {
+      availableFlags: availableFlags,
+      currentFlag: currentFlag,
+      correctAnswers: this.state.correctAnswers + 1
+    }));
+
+    console.log(this.state);
+
+    console.log('correct!');
 
     return true;
   }

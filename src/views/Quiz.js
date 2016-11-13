@@ -12,10 +12,18 @@ class Quiz extends Component {
     }
 
     this.inputOnChange = this.inputOnChange.bind(this);
+    this.clearInput = this.clearInput.bind(this);
   }
 
   inputOnChange(e) {
     this.setState(Object.assign({}, { input: e.target.value }));
+  }
+
+  clearInput(b) {
+    if (!b) return;
+
+    this.setState(Object.assign({}, this.state, { input: '' }));
+    this.textInput.focus();
   }
 
   render() {
@@ -23,8 +31,8 @@ class Quiz extends Component {
       <div className="quiz view">
         <p>Quiz view</p>
         <Flag flag={this.props.flag} />
-        <input type="text" value={this.state.input} onChange={this.inputOnChange} />
-        <Button value="Check my answer" onClick={() => this.props.checkAnswer(this.state.input)} />
+        <input type="text" ref={(input) => this.textInput = input} value={this.state.input} onChange={this.inputOnChange} />
+        <Button value="Check my answer" onClick={() => { this.clearInput(this.props.checkAnswer(this.state.input)) }} />
         <Button value="Change flag" onClick={this.props.changeCurrentFlag} />
       </div>
     )
