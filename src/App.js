@@ -11,7 +11,9 @@ flags.splice(flags.length - 1, 1);
 //Views
 import Menu from './views/Menu.js';
 import Quiz from './views/Quiz.js';
+import Win from './views/Win.js';
 import Result from './views/Result.js';
+
 
 export default class App extends Component {
 
@@ -23,7 +25,8 @@ export default class App extends Component {
     this.views = {
       'menu': 0,
       'quiz': 1,
-      'result': 2
+      'win': 2,
+      'result': 3
     }
 
     this.state = {
@@ -57,6 +60,8 @@ export default class App extends Component {
   renderView() {
     if (this.state.view === this.views.quiz) {
       return <Quiz flags={this.flags} score={this.state.score} updateScoreAndFlag={this.updateScoreAndFlag} clearAll={this.clearAll} changeView={this.changeView} views={this.views} />
+    } else if (this.state.view === this.views.win) {
+      return <Win flags={this.flags} clearAll={this.clearAll} changeView={this.changeView} views={this.views} />
     } else if (this.state.view === this.views.result) {
       return <Result score={this.state.score} flag={this.state.currentFlag} clearAll={this.clearAll} changeView={this.changeView} views={this.views} />
     } else {

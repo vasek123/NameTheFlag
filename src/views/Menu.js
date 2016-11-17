@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import Button from '../components/Button.js';
 
+
 class Menu extends Component {
   render() {
     return (

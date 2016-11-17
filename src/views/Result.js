@@ -1,20 +1,18 @@
 import React, { Component } from 'react';
 
 import Button from '../components/Button.js';
-import Label from '../components/Label.js';
+
 
 class Result extends Component {
-  constructor(props) {
-    super(props);
-  }
-  
   render() {
+    let flagName = (this.props.flag.name).split(' ').map(function (str) {
+      return str[0].toUpperCase() + str.slice(1).toLowerCase();
+    }).join(' ');
+
     return (
       <div className="result view">
         <p>Result view</p>
-        <Label>
-          Good job! Your final score is {this.props.score}! The last flag was {this.props.flag.name}!
-        </Label>
+        <p>Good job! Your final score is {this.props.score}! The last flag was the the flag of {flagName}!</p>
         <Button value="Try again" onClick={() => { this.props.clearAll(); this.props.changeView(this.props.views.quiz); }} />
       </div>
     )
