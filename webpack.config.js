@@ -1,3 +1,5 @@
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+
 module.exports = {
 
   entry: {
@@ -7,7 +9,7 @@ module.exports = {
 
   output: {
     filename: 'app.js',
-    path: __dirname + '/public/js'
+    path: __dirname + '/public'
   },
 
   resolve: {
@@ -26,12 +28,19 @@ module.exports = {
         loader: 'file?name=[name].[ext]'
       },
       {
-        test: /\.scss$/,
-        loader: 'style!css!sass'
+        test: /\.scss?$/,
+        loader: ExtractTextPlugin.extract('css!sass')
       },
       {
-        test: /\.json$/, loader: 'json'
+        test: /\.json$/,
+        loader: 'json'
       }
     ]
-  }
+  },
+
+  plugins: [
+    new ExtractTextPlugin('style.css', {
+      allChunks: true
+    })
+  ]
 };

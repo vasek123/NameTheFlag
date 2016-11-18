@@ -11,8 +11,8 @@ class Result extends Component {
 
     return (
       <div className="result view">
-        <p>Result view</p>
-        <p>Good job! Your final score is {this.props.score}! The last flag was the the flag of {flagName}!</p>
+        <h2>Good job!</h2>
+        <p>Your final score is {this.props.score}! The last flag was the the flag of {flagName}!</p>
         <Button value="Try again" onClick={() => { this.props.clearAll(); this.props.changeView(this.props.views.quiz); }} />
       </div>
     )

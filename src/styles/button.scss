@@ -1,0 +1,17 @@
+@import 'mixins';
+
+.button {
+  border: none;
+  padding: 14px 16px;
+  outline: none;
+  background-color: #57A863;
+  font-family: sans-serif;
+  text-transform: uppercase;
+  color: #FFF;
+  @include rounded(4px);
+  cursor: pointer;
+
+  &:hover {
+    background-color: darken(#57A863, 4);
+  }
+}

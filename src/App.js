@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import './styles/main.scss';
+
 //Flags JSON
 import * as flagsJSON from '../assets/flags.json';
 let flags = [];

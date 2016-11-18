@@ -59,11 +59,10 @@ class Quiz extends Component {
   render() {
     return (
       <div className="quiz view" onKeyDown={this.onKeyDown}>
-        <p>Quiz view</p>
-        <Flag flag={this.state.currentFlag} />
-        <input type="text" ref={(input) => this.textInput = input} value={this.state.input} onChange={this.inputOnChange} />
-        <Button value="Check my answer" onClick={() => { this.checkAnswer(this.state.input) }} />
         <ScoreCounter score={this.props.score} max={this.props.flags.length} />
+        <Flag flag={this.state.currentFlag} />
+        <input type="text" placeholder="Answer" ref={(input) => this.textInput = input} value={this.state.input} onChange={this.inputOnChange} /><br/>
+        <Button value="Check my answer" onClick={() => { this.checkAnswer(this.state.input) }} />
       </div>
     )
   }
